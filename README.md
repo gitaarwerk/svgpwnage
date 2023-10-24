@@ -14,7 +14,7 @@ example code to teach obfuscated vulnerabilities in svg
 3. Co-workers under pressure may not see this and may trust the coder
 
 ## To prevent large parts
-1. Use CSP rules to reject sending data to unknown targets
+1. Use CSP rules to reject sending data to unknown targets & prevent unsafe evaluation
 2. Don't accept supplied minified code
 3. SISO/parties involved should have a signed agreement in case of data-breaches
 4. Have a small team of various experts to take a look when implementing third party code
