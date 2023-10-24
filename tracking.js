@@ -83,6 +83,8 @@ const initializeTrackingPixelXpl = (currentTime, identifier, svgElement, _) => {
     // So... an IFFE using an anonymous function => evaluate array object => using property 'sort' => using property 'constructor' => evaluate code =>, then self executes using 
     // adject parenthesis. 
     // all arguments v1, v2, currentTime, identifier are just non-arguments to throw you off.
+    // This way is just an easier way to hide the following: Function('alert(1)')(); It just creates a function with your code, and then executes this. 
+    // The Iffe in this part, just returns something to add to the confusion.
 
     // The actual code behind the numbers is: 
     /**
@@ -118,13 +120,16 @@ const initializeTrackingPixelXpl = (currentTime, identifier, svgElement, _) => {
 
     // how to prevent this? 
     // - ![]['sort'/<function>]['constructor'][<code>]() / eval / jsonP, be aware!
-    // - use CSP allow domains, so no call ever leaves.
-    // - don't save minified content in your code base. REALLY DON'T, if you have to, make sure security will agree on a clause between third party and us
+    // - use CSP allow listing only trusted domains, so no call ever leaves to an unsafe place.
+    // - use CSP unsafe-evaluation to prevent this
+    // - don't save minified content in your code base. REALLY DON'T, even if you got your CSP in order. If you have no choice, 
+    //   make sure security will agree on a clause between the involved parties. 
     // - don't trust me, or your colleagues. My intention was clear. But sometimes, it's not. Someone who's leaving the company, or just doesn't know
-    // - it can also be somone who injected this in third party code, and left their company.
+    // - it can also be somone who injected this in third party code, and have left their company, activating malware later.
     // - this can happen also in node_modules installed (leftpad, anyone?)
     // - use scanners like Acunetix. Sonarqube didn't caught this, Github Copilot didn't caught this.
-    // - Ask questions, and be strict. Don't accept code you don't understand. 
+    // - Ask questions, and be strict. Don't accept code you don't understand. I understand due to pressure you can't always view it properly,
+    //   but this is exactly how real penetration is done (other than: 'it mostly starts with an email' ;-) )
 
     // you can make this more evil
     // - proper encryption
